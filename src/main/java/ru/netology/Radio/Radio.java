@@ -2,11 +2,31 @@ package ru.netology.Radio;
 
 public class Radio {
     private int minStationNumber;
-    private int maxStationNumber = 9;
+    private int maxStationNumber = 10;
     private int currentStationNumber;
     private int minVolume;
-    private int maxVolume = 10;
+    private int maxVolume = 100;
     private int soundVolume;
+
+    public Radio(int currentStationNumber, int soundVolume) {
+        if(currentStationNumber < minStationNumber) {
+            return;
+        }
+        if (currentStationNumber > maxStationNumber) {
+            return;
+        }
+        this.currentStationNumber = currentStationNumber;
+        if (soundVolume < minVolume) {
+            return;
+        }
+        if (soundVolume > maxVolume) {
+            return;
+        }
+        this.soundVolume = soundVolume;
+    }
+
+    public Radio() {
+    }
 
     /**
      * переключает радиостанцию вперед,
@@ -36,6 +56,7 @@ public class Radio {
         }
     }
 
+
     /**
      * прибавляет звук
      * проверяет, что если звук находится на максимуме, то изменения не происходят, если нет, то прибавляет
@@ -59,44 +80,13 @@ public class Radio {
     }
 
     //getters, setters
-    public int getMinStationNumber() {
-        return minStationNumber;
-    }
-
-    public void setMinStationNumber(int minStationNumber) {
-        this.minStationNumber = minStationNumber;
-    }
-
-    public int getMaxStationNumber() {
-        return maxStationNumber;
-    }
-
-    public void setMaxStationNumber(int maxStationNumber) {
-        this.maxStationNumber = maxStationNumber;
-    }
-
     public int getCurrentStationNumber() {
         return currentStationNumber;
     }
 
     public void setCurrentStationNumber(int currentStationNumber) {
         this.currentStationNumber = currentStationNumber;
-    }
-
-    public int getMinVolume() {
-        return minVolume;
-    }
-
-    public void setMinVolume(int minVolume) {
-        this.minVolume = minVolume;
-    }
-
-    public int getMaxVolume() {
-        return maxVolume;
-    }
-
-    public void setMaxVolume(int maxVolume) {
-        this.maxVolume = maxVolume;
+        return;
     }
 
     public int getSoundVolume() {
@@ -105,5 +95,6 @@ public class Radio {
 
     public void setSoundVolume(int soundVolume) {
         this.soundVolume = soundVolume;
+        return;
     }
 }
