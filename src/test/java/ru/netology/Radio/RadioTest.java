@@ -7,82 +7,106 @@ import static org.junit.jupiter.api.Assertions.*;
 class RadioTest {
 
     @Test
-    void nextStation() {
-        Radio radio = new Radio(); //создаем новый экзампляр класса
-        assertEquals(0, radio.getCurrentStationNumber());
-        radio.setCurrentStationNumber(3); //присваеваем текущее значение
-        radio.next(); //вызываем метод
-        int resultStationNumber = radio.getCurrentStationNumber(); //ФР
-        assertEquals(4, resultStationNumber); //проверка
-    }
-
-    @Test
-    void nextStationMax() {
-        Radio radio = new Radio(); //создаем новый экзампляр класса
-        assertEquals(0, radio.getCurrentStationNumber());
-        radio.setCurrentStationNumber(9); //присваеваем текущее значение
-        radio.next(); //вызываем метод
-        int resultStationNumber = radio.getCurrentStationNumber(); //ФР
-        assertEquals(0, resultStationNumber); //проверка
-    }
-
-    @Test
-    void prevStation() {
-        Radio radio = new Radio(); //создаем новый экзампляр класса
-        assertEquals(0, radio.getCurrentStationNumber());
-        radio.setCurrentStationNumber(9); //присваеваем текущее значение
-        radio.prev(); //вызываем метод
-        int resultStationNumber = radio.getCurrentStationNumber(); //ФР
-        assertEquals(8, resultStationNumber); //проверка
-    }
-
-    @Test
-    void prevStationMin() {
-        Radio radio = new Radio(); //создаем новый экзампляр класса
-        assertEquals(0, radio.getCurrentStationNumber()); // проверка с 0
-        radio.setCurrentStationNumber(0); //присваеваем текущее значение
-        radio.prev(); //вызываем метод
-        int resultStationNumber = radio.getCurrentStationNumber(); //ФР
-        assertEquals(9, resultStationNumber); //проверка
-    }
-
-    @Test
-    void moreVolume() {
-        Radio radio = new Radio();
-        assertEquals(0, radio.getSoundVolume());
-        radio.setSoundVolume(5);
+    void nextStationAndVolume() {
+        Radio radio = new Radio(3,10);
+        radio.next();
         radio.more();
-        int resultVolume = radio.getSoundVolume();
-        assertEquals(6, resultVolume);
+        assertEquals(4, radio.getCurrentStationNumber());
+        assertEquals(11, radio.getSoundVolume());
     }
 
     @Test
-    void moreVolumeMax() {
-        Radio radio = new Radio();
-        assertEquals(0, radio.getSoundVolume());
-        radio.setSoundVolume(10);
+    void nextStationMaxAndMoreVolumeMax() {
+        Radio radio = new Radio(10,100);
+        radio.next();
         radio.more();
-        int resultVolume = radio.getSoundVolume();
-        assertEquals(10, resultVolume);
+        assertEquals(0, radio.getCurrentStationNumber());
+        assertEquals(100, radio.getSoundVolume());
+    }
+
+    @Test
+    void prevStationAndVolumeMax() {
+        Radio radio = new Radio(9,101);
+        radio.prev();
+        radio.lessen();
+        assertEquals(8, radio.getCurrentStationNumber());
+        assertEquals(0, radio.getSoundVolume());
+    }
+
+    @Test
+    void prevStationMinAndLessenVolume() {
+        Radio radio = new Radio(0,99);
+        radio.prev();
+        radio.lessen();
+        assertEquals(10, radio.getCurrentStationNumber());
+        assertEquals(98, radio.getSoundVolume());
+    }
+
+    @Test
+    void moreVolumeAndPrevStation() {
+        Radio radio = new Radio(7,77);
+        radio.prev();
+        radio.more();
+        assertEquals(6, radio.getCurrentStationNumber());
+        assertEquals(78, radio.getSoundVolume());
+    }
+
+    @Test
+    void moreVolumeMaxAndPrevStation() {
+        Radio radio = new Radio(7,100);
+        radio.prev();
+        radio.more();
+        assertEquals(6, radio.getCurrentStationNumber());
+        assertEquals(100, radio.getSoundVolume());
     }
 
     @Test
     void lessenVolume() {
-        Radio radio = new Radio();
-        assertEquals(0, radio.getSoundVolume());
-        radio.setSoundVolume(10);
+        Radio radio = new Radio(10, 10);
+        radio.next();
         radio.lessen();
-        int resultVolume = radio.getSoundVolume();
-        assertEquals(9, resultVolume);
+        assertEquals(0,radio.getCurrentStationNumber());
+        assertEquals(9, radio.getSoundVolume());
     }
 
     @Test
-    void lessenVolumeMin() {
-        Radio radio = new Radio();
-        assertEquals(0, radio.getSoundVolume());
-        radio.setSoundVolume(0);
+    void lessenVolumeMinAndNextStation() {
+        Radio radio = new Radio(0,0);
+        radio.next();
         radio.lessen();
-        int resultVolume = radio.getSoundVolume();
-        assertEquals(0, resultVolume);
+        assertEquals(1, radio.getCurrentStationNumber());
+        assertEquals(0, radio.getSoundVolume());
     }
+
+    @Test
+    void lessenVolumeMinAndPrevStation() {
+        Radio radio = new Radio(10,-1);
+        radio.prev();
+        radio.lessen();
+        assertEquals(9, radio.getCurrentStationNumber());
+        assertEquals(0, radio.getSoundVolume());
+    }
+
+    @Test
+    void setCurrentStationAndLessenVolume(){
+        Radio radio = new Radio(7,70);
+        assertEquals(7, radio.getCurrentStationNumber());
+        assertEquals(70, radio.getSoundVolume());
+    }
+
+    @Test
+    void setCurrentStationMaxAndLessenVolume(){
+        Radio radio = new Radio(11,101);
+        assertEquals(0, radio.getCurrentStationNumber());
+        assertEquals(0, radio.getSoundVolume());
+    }
+
+
+    @Test
+    void setCurrentStationMinAndLessenVolume() {
+        Radio radio = new Radio(-1, -1);
+        assertEquals(0, radio.getCurrentStationNumber());
+        assertEquals(0, radio.getSoundVolume());
+    }
+
 }
